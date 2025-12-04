@@ -5,7 +5,7 @@ GRID_WIDTH = 80
 GRID_HEIGHT = 80
 
 #Размер ячейки в пикселях
-CELL_SIZE = 10
+CELL_SIZE = 8
 
 #Размер сетки в пикселях
 GRID_PIXEL_WIDTH = GRID_WIDTH * CELL_SIZE
@@ -26,4 +26,5 @@ SURVIVE_MAX = 3
 
 #Скорость симуляции, FPS
 FPS = 10
+
 
