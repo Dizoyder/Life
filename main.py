@@ -17,6 +17,39 @@ def create_grid():
 
     return g 
 
+#Рисование сетки
+def draw_grid(screen, grid):
+    #Затирание окна
+    screen.fill(COLOR_FILL)
+    #Рисование живых ячеек
+    for y in range(GRID_WIDTH):
+       for x in range(GRID_HEIGHT):
+           if grid[y][x] == 1:
+               r = pg.Rect(
+                    x * CELL_SIZE,
+                    y * CELL_SIZE,
+                    CELL_SIZE,
+                    CELL_SIZE,
+                   )
+               pg.draw.rect(screen, COLOR_CELL, r)
+
+    #Рисование линий
+    for x in range(0, GRID_PIXEL_WIDTH, CELL_SIZE):
+        pg.draw.line(
+            screen,
+            COLOR_GRID,
+            (x, 0),
+            (x, GRID_PIXEL_HEIGHT)
+
+            )    
+    for y in range(0, GRID_PIXEL_HEIGHT, CELL_SIZE):
+        pg.draw.line(
+            screen,
+            COLOR_GRID,
+            (0, y),
+            (GRID_PIXEL_WIDTH, y)
+
+            )
 
 #Главный цикл
 pg.init()
@@ -46,9 +79,14 @@ while True:
             if event.key == pg.K_ESCAPE:
                 pg.quit()
 
+    #Отрисовка
+    draw_grid(screen, grid)
+
+    #Переворот графических буферов
+    pg.display.flip()
+    
     #Скорость обновления(fps)
     clock.tick(FPS)
-
 
 
 
