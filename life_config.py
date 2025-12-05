@@ -27,4 +27,11 @@ SURVIVE_MAX = 3
 #Скорость симуляции, FPS
 FPS = 10
 
+#Цвета
+COLOR_FILL = (10, 10, 10)
+COLOR_CELL = (220, 220, 220)
+COLOR_GRID = (40, 40, 40)
+COLOR_INFO = (20, 20, 20)
+COLOR_FONT = (200, 200, 200)
+
 
