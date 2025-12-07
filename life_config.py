@@ -24,6 +24,9 @@ BIRTH_MAX = 3
 SURVIVE_MIN = 2
 SURVIVE_MAX = 3
 
+#Распределение ячеек
+DENSITY = 0.25
+
 #Скорость симуляции, FPS
 FPS = 10
 
@@ -33,5 +36,3 @@ COLOR_CELL = (220, 220, 220)
 COLOR_GRID = (40, 40, 40)
 COLOR_INFO = (20, 20, 20)
 COLOR_FONT = (200, 200, 200)
-
-
