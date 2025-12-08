@@ -44,7 +44,29 @@ def count_neighbors(grid, x, y):
                        count = count + 1
     return count
         
-
+#Один шаг генерации игры
+def step(grid):
+    #Создание пустой копии сетки
+    new_grid = create_grid()
+    for y in range(GRID_WIDTH):
+        for x in range(GRID_HEIGHT):
+            #Подсчёт соседней клетки
+            neighbors = count_neighbors(grid, x, y)
+            #Проверка правила выживания клетки
+            if grid[y][x] == 1:
+                if SURVIVE_MIN <= neighbors <= SURVIVE_MAX:
+                    new_grid[y][x] = 1
+                else:
+                    new_grid[y][x] = 0
+            #Проверка правила рождения клетки
+            if grid[y][x] == 0:
+                if BIRTH_MIN <= neighbors <= BIRTH_MAX:
+                    new_grid[y][x] = 1
+                else:
+                    new_grid[y][x] = 0
+    return new_grid
+    
+            
 #Рисование сетки
 def draw_grid(screen, grid):
     #Затирание окна
@@ -78,6 +100,34 @@ def draw_grid(screen, grid):
             (GRID_PIXEL_WIDTH, y)
 
             )
+
+#Рисование информационной панели
+def draw_info(screen, font, isRun, gen, top_y):
+    #Строка правил
+    rule_text = f"Правила: рождение - {BIRTH_MIN}-{BIRTH_MAX}, выживание - {SURVIVE_MIN}-{SURVIVE_MAX}"
+    #Строка состояния
+    if isRun == True:
+        state_text = "Процесс"
+    else:
+        state_text = "Пауза"
+    #Строка Генерации
+    gen_text = f"Генераций: {gen}"
+    #Список строк
+    info_lines = [
+        f"{rule_text} | {state_text} | {gen_text}",
+        "SPACE: запуск/пауза, N: следующий шаг",
+        "R: заполнить сетку случайно, C: очистить сетку",
+        "Мышь (ЛКМ/ПКМ): заполнить/стереть ячейку, ESC: выход из программы"
+        ]
+    
+    #Отрисовка
+    y = top_y
+    for line in info_lines:
+        surf = font.render(line, True, COLOR_FONT)
+        #Вклеивание строки в окно
+        screen.blit(surf, (5, y))
+        y = y + surf.get_height() + 2
+        
 
 #Главный цикл
 pg.init()
@@ -124,8 +174,17 @@ while True:
             if event.key == pg.K_r:
                 randomize_grid(grid)
                 gen = 0
-    #Отрисовка
+
+    #Обновление симуляциии
+    if isRun == True:
+        grid = step(grid)
+        gen = gen + 1
+
+    #Отрисовка сетки
     draw_grid(screen, grid)
+
+    #Отрисовка инфо панели
+    draw_info(screen, font, isRun, gen, GRID_PIXEL_HEIGHT + 5)
 
     #Переворот графических буферов
     pg.display.flip()
