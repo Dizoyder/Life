@@ -174,6 +174,38 @@ while True:
             if event.key == pg.K_r:
                 randomize_grid(grid)
                 gen = 0
+            #Пошаговый запуск
+            if event.key == pg.K_n and not isRun:
+                grid = step(grid)
+                gen = gen + 1
+
+        #Нарисовать/стереть в ручную
+        if not isRun:
+            if event.type == pg.MOUSEBUTTONDOWN:
+                #Точка события
+                x, y = event.pos
+                if 0 <= x <= GRID_PIXEL_WIDTH:
+                    if 0 <= y <= GRID_PIXEL_HEIGHT:
+                        #Вычисление строки и столбца клетки
+                        ix = x // CELL_SIZE
+                        iy = y // CELL_SIZE
+                        if event.button == 1: #Клик ЛКМ
+                            grid[iy][ix] = 1
+                        elif event.button == 3: #Клик ПКМ
+                            grid[iy][ix] = 0
+            elif event.type == pg.MOUSEMOTION:
+                #Точка события
+                x, y = event.pos
+                if 0 <= x <= GRID_PIXEL_WIDTH:
+                    if 0 <= y <= GRID_PIXEL_HEIGHT:
+                        #Вычисление строки и столбца клетки
+                        ix = x // CELL_SIZE
+                        iy = y // CELL_SIZE
+                        buttons = event.buttons 
+                        if buttons[0]: #ЛКМ зажата 
+                            grid[iy][ix] = 1
+                        elif buttons[2]: #ПКМ зажата
+                            grid[iy][ix] = 0
 
     #Обновление симуляциии
     if isRun == True:
