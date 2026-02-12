@@ -8,9 +8,9 @@ from life_config import *
 #Создание сетки как списка списков
 def create_grid():
     g = []
-    for row in range(GRID_WIDTH):
+    for row in range(GRID_HEIGHT):
         r = []
-        for col in range(GRID_HEIGHT):
+        for col in range(GRID_WIDTH):
             r.append(0)
 
         g.append(r)
@@ -19,8 +19,8 @@ def create_grid():
 
 #Случайное заполнение сетки
 def randomize_grid(grid):
-    for row in range(GRID_WIDTH):
-        for col in range(GRID_HEIGHT):
+    for row in range(GRID_HEIGHT):
+        for col in range(GRID_WIDTH):
             if random.random() < DENSITY:
                 grid[row][col] = 1
             else:
@@ -48,8 +48,8 @@ def count_neighbors(grid, x, y):
 def step(grid):
     #Создание пустой копии сетки
     new_grid = create_grid()
-    for y in range(GRID_WIDTH):
-        for x in range(GRID_HEIGHT):
+    for y in range(GRID_HEIGHT):
+        for x in range(GRID_WIDTH):
             #Подсчёт соседней клетки
             neighbors = count_neighbors(grid, x, y)
             #Проверка правила выживания клетки
@@ -72,8 +72,8 @@ def draw_grid(screen, grid):
     #Затирание окна
     screen.fill(COLOR_FILL)
     #Рисование живых ячеек
-    for y in range(GRID_WIDTH):
-       for x in range(GRID_HEIGHT):
+    for y in range(GRID_HEIGHT):
+       for x in range(GRID_WIDTH):
            if grid[y][x] == 1:
                r = pg.Rect(
                     x * CELL_SIZE,
